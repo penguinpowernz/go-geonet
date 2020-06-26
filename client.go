@@ -25,6 +25,7 @@ func NewClient() *Client {
 }
 
 func (c *Client) Request(method, path string) (*http.Request, error) {
+	method = strings.ToUpper(method)
 	url := fmt.Sprintf("%s/%s", baseURI, strings.TrimLeft(path, "/"))
 	req, err := http.NewRequest(method, url, nil)
 	req.Header.Set("User-Agent", c.UserAgent)
@@ -38,7 +39,7 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (c *Client) Get(path string, v interface{}) error {
-	req, err := c.Request("get", path)
+	req, err := c.Request("GET", path)
 	if err != nil {
 		return err
 	}
